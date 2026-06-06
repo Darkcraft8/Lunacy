@@ -18,6 +18,7 @@ Todo. Insert Information about ailment caused by low sanity/high madness
 #### Framework Explanation <a name="description2"></a>
   - Todo.
 #### Integrated Compact <a name="compacts"></a>
+  - [openStarbound](/_doc/compacts/osb.md 'Click to see documentation')
   - [Frackin Universe](/_doc/compacts/frackinuniverse.md 'Click to see documentation')
 #### Developers <a name="devs"></a>
   - [Darkcraft8 | Primary Programmer and Designer][darkcraft8]
