@@ -14,4 +14,5 @@
 ### The user may :
 - Use any content created directly or indirectly using the mod
 
-[def]: Readme.md#developers
+[def]: <https://github.com/Darkcraft8/Lunacy/blob/dev/Readme.md#devs>
+[def2]: <https://community.playstarbound.com/help/mod-terms/> "Click to access Chucklefish Mod Terms"
