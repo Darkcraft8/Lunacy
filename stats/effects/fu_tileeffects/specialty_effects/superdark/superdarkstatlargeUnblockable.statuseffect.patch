@@ -1,0 +1,9 @@
+[
+    [
+        {
+			"op": "add",
+			"path": "/scripts/-",
+			"value": "/stats/effects/fu_tileeffects/specialty_effects/superdark/superdarkstat_d8madnesspatch.lua"
+		}
+    ]
+]

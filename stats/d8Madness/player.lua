@@ -69,7 +69,7 @@ local test = {
                 require = 1,
                 zoom = {60, 4},
                 texture = "/cinematics/story/blackcircle.png?setcolor=000000?multiply=fff8",
-                name = "d8Madness_darkenView",
+                name = "d8Madness_darkenView7",
                 xSine = {
                     intensity = 1.75,
                     range = 1
@@ -84,7 +84,7 @@ local test = {
                 require = 0.9,
                 zoom = {60, 6},
                 texture = "/cinematics/story/blackcircle.png?setcolor=000000?multiply=fff8",
-                name = "d8Madness_darkenView2",
+                name = "d8Madness_darkenView6",
                 xSine = {
                     intensity = -1.5,
                     range = 1
@@ -99,7 +99,7 @@ local test = {
                 require = 0.8,
                 zoom = {60, 8},
                 texture = "/cinematics/story/blackcircle.png?setcolor=000000?multiply=fff8",
-                name = "d8Madness_darkenView3",
+                name = "d8Madness_darkenView5",
                 xSine = {
                     intensity = 1.25,
                     range = 1
@@ -129,7 +129,7 @@ local test = {
                 require = 0.6,
                 zoom = {60, 12.5},
                 texture = "/cinematics/story/blackcircle.png?setcolor=000000?multiply=fff8",
-                name = "d8Madness_darkenView5",
+                name = "d8Madness_darkenView3",
                 xSine = {
                     intensity = 0.75,
                     range = 1
@@ -144,7 +144,7 @@ local test = {
                 require = 0.5,
                 zoom = {60, 15},
                 texture = "/cinematics/story/blackcircle.png?setcolor=000000?multiply=fff8",
-                name = "d8Madness_darkenView6",
+                name = "d8Madness_darkenView2",
                 xSine = {
                     intensity = -0.5,
                     range = 1
@@ -159,7 +159,7 @@ local test = {
                 require = 0.45,
                 zoom = {60, 18},
                 texture = "/cinematics/story/blackcircle.png?setcolor=000000?multiply=fff8",
-                name = "d8Madness_darkenView7",
+                name = "d8Madness_darkenView1",
                 xSine = {
                     intensity = 0.25,
                     range = 1
@@ -311,11 +311,26 @@ function D8Madness.clearIcon()
     d8SharedRendererUtil.removeDrawable("d8Madness_IconFill")
     d8SharedRendererUtil.removeDrawable("d8Madness_IconBackground")
 end
-
+effectStrenghtModifier = 1
 function D8Madness.effect(dt, madnessPercent)
     --sb.logInfo("localAnimator %s", localAnimator)
     for _, _effect in pairs(copy(madnessEffects)) do 
         local add = false
+        if _effect.force then
+            if type(_effect.require) == "table" then
+                _effect.require = vec2.sub(_effect.require, {_effect.force, _effect.force})
+                _effect.require[1] = math.max(_effect.require[1], 0)
+                _effect.require[2] = math.max(_effect.require[2], 0)
+            else
+                _effect.require = math.max(_effect.require - _effect.force, 0)
+            end
+        end
+        if type(_effect.require) == "table" then
+            _effect.require = vec2.mul(_effect.require, (4 * (1 - effectStrenghtModifier)))
+        else
+            _effect.require = _effect.require * (4 * (1 - effectStrenghtModifier))
+        end
+        
         if _effect.type == "overlay" then
             local r = 0
             local requireBypass = false
@@ -455,7 +470,7 @@ function D8Madness.effect(dt, madnessPercent)
         end
     end
     for _, a in pairs(D8Madness.compact.effect) do 
-        a.callback(dt, madnessPercent)
+        a.callback(dt, madnessPercent * effectStrenghtModifier)
     end
 end
 
@@ -463,7 +478,7 @@ local lightTimer = 0
 local lightModiff = 0
 local species
 D8Madness.modifierStep = {
-    dungeonAndArea = function(speciesCfg, species, pos)
+    dungeonAndArea = function(dt, speciesCfg, species, pos)
         local speciesModiff = function(paramName)
             if (speciesCfg[species] or {})[paramName] then
                 return (speciesCfg[species] or {})[paramName]
@@ -513,7 +528,7 @@ D8Madness.modifierStep = {
             if not tempStorage["instWorldCfg"] then tempStorage["instWorldCfg"] = instWorldCfg end
         end
     end,
-    liquid = function(speciesCfg, species, pos)
+    liquid = function(dt, speciesCfg, species, pos)
         local speciesModiff = function(paramName)
             if (speciesCfg[species] or {})[paramName] then
                 return (speciesCfg[species] or {})[paramName]
@@ -533,7 +548,7 @@ D8Madness.modifierStep = {
             --sb.setLogMap("D8:Madness Liquid Modiff", "0, Not in liquid")
         end
     end,
-    object = function(speciesCfg, species, pos)
+    object = function(dt, speciesCfg, species, pos)
         local speciesModiff = function(paramName)
             if (speciesCfg[species] or {})[paramName] then
                 return (speciesCfg[species] or {})[paramName]
@@ -541,19 +556,20 @@ D8Madness.modifierStep = {
             return speciesCfg.default[paramName]
         end
         
-        local obj = world.objectQuery(pos, 4)
+        local obj = world.objectQuery(pos, 30)
         local objModiff = 0
         for _, id in pairs(obj) do 
             local _pos = world.entityPosition(id)
             local _mod = world.getObjectParameter(id, "D8Madness_modiff")
-            if _mod and (not world.lineTileCollision(pos, _pos, {"Dynamic", "Block", "Slippery"})) then
+            local _range = world.getObjectParameter(id, "D8Madness_range") or 4
+            if _mod and (not world.lineTileCollision(pos, _pos, {"Dynamic", "Block", "Slippery"})) and (_range <= world.magnitude(pos, _pos)) then
                 objModiff = objModiff + _mod
             end
         end
         --sb.setLogMap("D8:Madness Object Modiff", "%s", objModiff)
         D8Madness_modiff = D8Madness_modiff + objModiff
     end,
-    light = function(speciesCfg, species, pos)
+    light = function(dt, speciesCfg, species, pos)
         local speciesModiff = function(paramName)
             if (speciesCfg[species] or {})[paramName] then
                 return (speciesCfg[species] or {})[paramName]
@@ -589,6 +605,6 @@ function D8Madness.modifier(dt)
     D8Madness_modiff = copy(speciesCfg.defaultModiff or 0)
     local pos = mcontroller.position()
     for funcName, funcCall in pairs(D8Madness.modifierStep) do 
-        funcCall(speciesCfg, species, pos)
+        funcCall(dt, speciesCfg, species, pos)
     end
 end
