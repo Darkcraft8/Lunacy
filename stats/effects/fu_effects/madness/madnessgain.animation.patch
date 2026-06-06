@@ -1,0 +1,17 @@
+[
+  {
+    "op": "replace",
+    "path": "/particleEmitters/insane/enabled",
+    "value": false
+  },
+  {
+    "op": "replace",
+    "path": "/particleEmitters/insane/particles",
+    "value": []
+  },
+  {
+    "op": "replace",
+    "path": "/lights/lantern/active",
+    "value": false
+  }
+]

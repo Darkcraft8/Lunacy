@@ -1,0 +1,14 @@
+[
+    [
+        {
+			"op": "test",
+            "inverse" : true,
+			"path": "/madnessModifier"
+		},
+		{
+			"op": "add",
+			"path": "/madnessModifier",
+			"value": -0.25
+		}
+    ]
+]

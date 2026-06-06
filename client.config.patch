@@ -1,0 +1,23 @@
+[
+    {"op":"add","path":"/postProcessGroups/madnessSaturation","value":{
+            "enabledDefault":true,
+            "friendlyName": "Madness Effect",
+            "description": "Debug",
+            "parameters": {
+                "madnessStrength": {
+                    "effects": ["madnessSaturation"],
+                    "label": "Effect Strengh",
+                    "type": "slider",
+                    "delta": 0.02,
+                    "range": [0,1],
+                    "default": 1
+                }
+            }
+    }},
+    {"op":"add","path":"/postProcessLayers/-","value":{
+            "effects": [
+                "madnessSaturation"
+            ],
+            "group":"madnessSaturation"
+    }}
+] 

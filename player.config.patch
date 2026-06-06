@@ -1,0 +1,16 @@
+[
+    [
+		{
+			"op": "add",
+			"path": "/statusControllerSettings/primaryScriptSources/-",
+			"value": "/stats/d8Madness/player.lua"
+		}
+    ],
+	[
+		{ 
+			"op" : "add",
+			"path" : "/genericScriptContexts/d8Madness",
+			"value" : "/stats/d8Madness/playerCall.lua"
+		}
+	]
+]

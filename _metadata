@@ -1,0 +1,11 @@
+{
+  "author" : "Darkcraft8",
+  "description" : "Lunacy is a framework that add a new system for the players to take care of... Sanity!!!\nYes now your character can (and mostlikely will) go insane from his/her environement. Todo. Insert Information about ailment caused by low sanity/high madness",
+  "friendlyName" : "Lunacy, A madness framework | Alpha 0.1.0",
+  "name" : "d8-madness",
+  "priority" : 0,
+  "include" : ["FrackinUniverse"],
+  "require" : ["d8_sharedFiles"],
+  "tags" : "Miscellaneous|Mechanics",
+  "version" : "0.1.0"
+}

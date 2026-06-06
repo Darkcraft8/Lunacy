@@ -1,0 +1,132 @@
+[
+    [
+        {
+			"op": "add",
+			"path": "/protectorate/D8Madness_modiff",
+			"value": -5
+		},
+		{
+			"op": "add",
+			"path": "/outpost/D8Madness_modiff",
+			"value": -5
+		},
+		{
+			"op": "add",
+			"path": "/museum/D8Madness_modiff",
+			"value": -5
+		}
+    ],
+    [
+        {
+			"op": "add",
+			"path": "/lunarbase/D8Madness_modiff",
+			"value": 2
+		},
+		{
+			"op": "add",
+			"path": "/floranmission1/D8Madness_modiff",
+			"value": 2
+		},
+		{
+			"op": "add",
+			"path": "/hylotlmission1/D8Madness_modiff",
+			"value": 1
+		},
+		{
+			"op": "add",
+			"path": "/avianmission1/D8Madness_modiff",
+			"value": 1
+		},
+		{
+			"op": "add",
+			"path": "/apexmission1/D8Madness_modiff",
+			"value": 2
+		},
+		{
+			"op": "add",
+			"path": "/glitchmission1/D8Madness_modiff",
+			"value": 0.5
+		},
+		{
+			"op": "add",
+			"path": "/penguinmission1/D8Madness_modiff",
+			"value": 1
+		},
+		{
+			"op": "add",
+			"path": "/penguinmission2/D8Madness_modiff",
+			"value": 0
+		},
+		{
+			"op": "add",
+			"path": "/cultistmission1/D8Madness_modiff",
+			"value": 3
+		},
+		{
+			"op": "add",
+			"path": "/tentaclemission/D8Madness_modiff",
+			"value": 8
+		}
+    ],
+    [
+        {
+			"op": "add",
+			"path": "/playerstation/D8Madness_modiff",
+			"value": -5
+		},
+		{
+			"op": "add",
+			"path": "/spacestation_electronics/D8Madness_modiff",
+			"value": -3
+		},
+		{
+			"op": "add",
+			"path": "/spacestation_food/D8Madness_modiff",
+			"value": -3
+		},
+		{
+			"op": "add",
+			"path": "/spacestation_medical/D8Madness_modiff",
+			"value": -3
+		},
+		{
+			"op": "add",
+			"path": "/spacestation_weapons/D8Madness_modiff",
+			"value": -3
+		},
+
+		{
+			"op": "add",
+			"path": "/spacestation_peacekeeper1/D8Madness_modiff",
+			"value": 1
+		},
+		{
+			"op": "add",
+			"path": "/spacestation_peacekeeper2/D8Madness_modiff",
+			"value": 0.5
+		},
+		{
+			"op": "add",
+			"path": "/spacestation_peacekeeper3/D8Madness_modiff",
+			"value": -1
+		},
+		{
+			"op": "add",
+			"path": "/spacestation_peacekeeper4/D8Madness_modiff",
+			"value": -1.5
+		},
+		{
+			"op": "add",
+			"path": "/spacestation_peacekeeper5/D8Madness_modiff",
+			"value": -3
+		}
+    ],
+
+    [
+        {
+			"op": "add",
+			"path": "/eldershoggoth/D8Madness_modiff",
+			"value": 10
+		}
+    ]
+]
