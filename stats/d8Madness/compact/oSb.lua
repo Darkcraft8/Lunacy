@@ -1,5 +1,6 @@
 require "/scripts/rect.lua"
 local interfaceCanvas
+local effect_render
 local teamBar
 local TeamBarCallback
 local screenSize
@@ -7,7 +8,6 @@ function osb_icon(dt, madnessPercent)
     if interface then
         -- insert oSb support
         D8Madness.setParameter("renderDefaultIcon", false)
-        if not interfaceCanvas then interfaceCanvas = interface.bindCanvas("D8Madness_Icon") end
         if not teamBar then 
             TeamBarCallback = interface.bindRegisteredPane("TeamBar")
             teamBar = {
@@ -17,6 +17,7 @@ function osb_icon(dt, madnessPercent)
             teamBar.size[2] = 0
         end
         interfaceCanvas:clear()
+        if D8Madness.getParameter("hideIcon") then return end
         local backTexture = "/objects/floran/huntingtrophy1/huntingtrophy1.png"
         local iconTexture = "/items/generic/crafting/inferiorbrain.png"
         local fillTexture = "/items/generic/crafting/brain.png"
@@ -56,6 +57,20 @@ function osb_icon(dt, madnessPercent)
         end
     end
 end
+--exist primarily so that having the scanner equiped doesn't cause massive fps loss, sadly(or not) it ins't affected by shaders
+function osb_rendering_conversion(dt, madnessPercent, toBeRendered)
+    if interface.bindCanvas then
+        effect_render:clear()
+        table.sort(toBeRendered or {}, function(a, b)
+            return a.priority < b.priority
+        end)
+        local zoom = camera.pixelRatio()
+        for i, cfg in pairs(toBeRendered or {}) do
+            local pos = vec2.add(cfg.drawable.position or {0, 0}, entity.position())
+            effect_render:drawImageDrawable(cfg.drawable.image or "/assetmissing.png", camera.worldToScreen(pos), (cfg.drawable.scale or 1) * zoom, cfg.drawable.color or {255, 255, 255, 255}, cfg.drawable.rotation or 0)
+        end
+    end
+end
 
 function osb_shader(dt, madnessPercent)
     if renderer then 
@@ -65,11 +80,16 @@ function osb_shader(dt, madnessPercent)
 end
 
 function osb_uninit()
-    interfaceCanvas:clear()
+    if interfaceCanvas then interfaceCanvas:clear() end
 end
 
 function load()
+    if not (interface and renderer) then return end
+    if not effect_render then effect_render = interface.bindCanvas("-10000, D8Madness_effect_render", true) end
+    if not interfaceCanvas then interfaceCanvas = interface.bindCanvas("0, D8Madness_Icon") end
     D8Madness.addCompact("update", osb_icon, -999999)
+    D8Madness.addCompact("effect", osb_rendering_conversion)
     D8Madness.addCompact("effect", osb_shader)
     D8Madness.addCompact("uninit", osb_uninit)
+    disableDrawableRender = true
 end

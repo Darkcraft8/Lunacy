@@ -66,9 +66,9 @@ local test = {
             },
             {
                 type = "overlay",
-                require = 1,
+                require = {0.1, 1},
                 zoom = {60, 4},
-                texture = "/cinematics/story/blackcircle.png?setcolor=000000?multiply=fff8",
+                texture = "/cinematics/story/blackcircle.png?setcolor=000?multiply=fff8",
                 name = "d8Madness_darkenView7",
                 xSine = {
                     intensity = 1.75,
@@ -81,9 +81,9 @@ local test = {
             },
             {
                 type = "overlay",
-                require = 0.9,
+                require = {0.1, 0.9},
                 zoom = {60, 6},
-                texture = "/cinematics/story/blackcircle.png?setcolor=000000?multiply=fff8",
+                texture = "/cinematics/story/blackcircle.png?setcolor=000?multiply=fff8",
                 name = "d8Madness_darkenView6",
                 xSine = {
                     intensity = -1.5,
@@ -96,9 +96,9 @@ local test = {
             },
             {
                 type = "overlay",
-                require = 0.8,
+                require = {0.1, 0.8},
                 zoom = {60, 8},
-                texture = "/cinematics/story/blackcircle.png?setcolor=000000?multiply=fff8",
+                texture = "/cinematics/story/blackcircle.png?setcolor=000?multiply=fff8",
                 name = "d8Madness_darkenView5",
                 xSine = {
                     intensity = 1.25,
@@ -111,9 +111,9 @@ local test = {
             },
             {
                 type = "overlay",
-                require = 0.7,
+                require = {0.1, 0.7},
                 zoom = {60, 10},
-                texture = "/cinematics/story/blackcircle.png?setcolor=000000?multiply=fff8",
+                texture = "/cinematics/story/blackcircle.png?setcolor=000?multiply=fff8",
                 name = "d8Madness_darkenView4",
                 xSine = {
                     intensity = -1,
@@ -126,9 +126,9 @@ local test = {
             },
             {
                 type = "overlay",
-                require = 0.6,
+                require = {0.1, 0.6},
                 zoom = {60, 12.5},
-                texture = "/cinematics/story/blackcircle.png?setcolor=000000?multiply=fff8",
+                texture = "/cinematics/story/blackcircle.png?setcolor=000?multiply=fff8",
                 name = "d8Madness_darkenView3",
                 xSine = {
                     intensity = 0.75,
@@ -141,9 +141,9 @@ local test = {
             },
             {
                 type = "overlay",
-                require = 0.5,
+                require = {0.1, 0.5},
                 zoom = {60, 15},
-                texture = "/cinematics/story/blackcircle.png?setcolor=000000?multiply=fff8",
+                texture = "/cinematics/story/blackcircle.png?setcolor=000?multiply=fff8",
                 name = "d8Madness_darkenView2",
                 xSine = {
                     intensity = -0.5,
@@ -156,9 +156,9 @@ local test = {
             },
             {
                 type = "overlay",
-                require = 0.45,
+                require = {0.1, 0.45},
                 zoom = {60, 18},
-                texture = "/cinematics/story/blackcircle.png?setcolor=000000?multiply=fff8",
+                texture = "/cinematics/story/blackcircle.png?setcolor=000?multiply=fff8",
                 name = "d8Madness_darkenView1",
                 xSine = {
                     intensity = 0.25,
@@ -175,23 +175,6 @@ local test = {
         end
     end
 }
-
-local _init = init
-function init()
-    if _init then _init() end
-    D8Madness.init()
-end
-local _update = update
-function update(dt)
-    if _update then _update(dt) end
-    D8Madness.update(dt)
-end
-local _uninit = uninit
-function uninit()
-    if _uninit then _uninit() end
-    D8Madness.uninit()
-end
-
 local tempStorage = {}
 local time = 0
 D8Madness_max = 1000
@@ -210,8 +193,9 @@ D8Madness = {
     }
 }
 madnessEffects = {}
-function D8Madness.addCompact(category, _function, priority)
-    table.insert(D8Madness.compact[category], {callback = _function, priority = priority or 0})
+function D8Madness.addCompact(category, _function, _priority)
+    D8Madness.compact[category] = D8Madness.compact[category] or {}
+    table.insert(D8Madness.compact[category], {callback = _function, priority = _priority or 0})
 	table.sort(D8Madness.compact[category], function(a, b)
 		return a.priority > b.priority
 	end)
@@ -225,7 +209,7 @@ function D8Madness.setParameter(paramName, value)
 end
 
 function D8Madness.init()
-    scriptConfig = root.assetJson(scriptConfig)
+    if type(scriptConfig) == "string" then scriptConfig = root.assetJson(scriptConfig) end
     for _, path in pairs(scriptConfig.load) do 
         require(path)
         load()
@@ -240,6 +224,10 @@ function D8Madness.init()
     message.setHandler("D8Madness_getCount", function(_, _, requestedBy)
         return D8Madness_count
     end)
+    message.setHandler("D8Madness_hideIcon", function(isLocal, _, bool)
+        if isLocal then D8Madness.setParameter("hideIcon", bool) end
+    end)
+    
     for _, a in pairs(D8Madness.compact.init) do 
         a.callback()
     end
@@ -250,7 +238,7 @@ function D8Madness.update(dt)
     time = time + dt
     D8Madness_count = util.clamp(math.min(D8Madness_count + ((dt * 0.25) * (D8Madness_modiff)), D8Madness_max), 0, D8Madness_max)
     sb.setLogMap("D8:Madness Lunacy Percent", "%s : %s%s", util.round(D8Madness_count), "%", madnessPercent)
-    if D8Madness.getParameter("renderDefaultIcon") then D8Madness.renderIcon(madnessPercent) else D8Madness.clearIcon() end
+    if D8Madness.getParameter("renderDefaultIcon") and (not D8Madness.getParameter("hideIcon")) then D8Madness.renderIcon(madnessPercent) else D8Madness.clearIcon() end
     D8Madness.effect(dt, madnessPercent)
     D8Madness.modifier(dt)
     for _, a in pairs(D8Madness.compact.update) do 
@@ -270,6 +258,7 @@ function D8Madness.uninit()
     for _, a in pairs(D8Madness.compact.uninit) do 
         D8Madness_count = a.callback(D8Madness_count) or D8Madness_count
     end
+    --status.addPersistentEffect("D8_Madness", {})
     status.setStatusProperty("D8_MadnessCount", D8Madness_count)
 end
 
@@ -311,9 +300,14 @@ function D8Madness.clearIcon()
     d8SharedRendererUtil.removeDrawable("d8Madness_IconFill")
     d8SharedRendererUtil.removeDrawable("d8Madness_IconBackground")
 end
+
 effectStrenghtModifier = 1
+local prevtoBeRendered = {}
 function D8Madness.effect(dt, madnessPercent)
     --sb.logInfo("localAnimator %s", localAnimator)
+    --effectStrenghtModifier = math.sin(time * 0.1)
+    --sb.setLogMap("D8:Madness effect Strenght Modifier", "%s, %s : %s", effectStrenghtModifier, (1 - effectStrenghtModifier), (4 * (1 - effectStrenghtModifier)))
+    local toBeRendered = {}
     for _, _effect in pairs(copy(madnessEffects)) do 
         local add = false
         if _effect.force then
@@ -325,18 +319,20 @@ function D8Madness.effect(dt, madnessPercent)
                 _effect.require = math.max(_effect.require - _effect.force, 0)
             end
         end
+        
         if type(_effect.require) == "table" then
-            _effect.require = vec2.mul(_effect.require, (4 * (1 - effectStrenghtModifier)))
+            _effect.require = vec2.add(_effect.require, vec2.mul({(4), (4)}, (1 - effectStrenghtModifier)))
         else
-            _effect.require = _effect.require * (4 * (1 - effectStrenghtModifier))
+            _effect.require = _effect.require + (4 * (1 - effectStrenghtModifier))
         end
+        --sb.logInfo("%s : _effect.require %s", _effect.name or _, _effect.require)
         
         if _effect.type == "overlay" then
             local r = 0
             local requireBypass = false
             if type(_effect.require) == "number" then
                 requireBypass = true
-                if (_effect.require == 0) then
+                if (_effect.require <= 0) then
                     add = true
                 else
                     add = madnessPercent >= _effect.require
@@ -344,7 +340,7 @@ function D8Madness.effect(dt, madnessPercent)
                 end
             elseif type(_effect.require) == "table" then
                 requireBypass = true
-                if (_effect.require[1] == 0) then
+                if (_effect.require[1] <= 0) then
                     add = true
                 else
                     add = (madnessPercent >= _effect.require[1]) and (madnessPercent <= _effect.require[2])
@@ -412,15 +408,7 @@ function D8Madness.effect(dt, madnessPercent)
                     local sine = math.sin(time * _effect.ySine.intensity) * _effect.ySine.range
                     drawable.position[2] = drawable.position[2] + sine
                 end
-                if d8SharedRendererUtil.hasDrawable(_effect.name) then
-                    d8SharedRendererUtil.updateDrawable(drawable, _effect.name)
-                else
-                    d8SharedRendererUtil.addDrawable(drawable, _effect.priority or 0, _effect.name)
-                end
-            else
-                if d8SharedRendererUtil.hasDrawable(_effect.name) then
-                    d8SharedRendererUtil.removeDrawable(_effect.name)
-                end
+                table.insert(toBeRendered, {name = _effect.name, drawable = drawable, priority = _effect.priority or 0})
             end
         elseif _effect.type == "sound" then
             --localAnimator.playAudio()
@@ -469,9 +457,30 @@ function D8Madness.effect(dt, madnessPercent)
             end
         end
     end
-    for _, a in pairs(D8Madness.compact.effect) do 
-        a.callback(dt, madnessPercent * effectStrenghtModifier)
+    for i, cfg in pairs(toBeRendered) do
+        if not disableDrawableRender then
+            if d8SharedRendererUtil.hasDrawable(cfg.name) then
+                d8SharedRendererUtil.updateDrawable(cfg.drawable, cfg.name)
+            else
+                d8SharedRendererUtil.addDrawable(cfg.drawable, cfg.priority, cfg.name)
+            end
+        end
     end
+    for i, cfg in pairs(prevtoBeRendered) do
+        local remove = true
+        for _i, _cfg in pairs(toBeRendered) do
+            if _cfg.name == cfg.name then remove = false break end
+        end
+        if remove then
+            if d8SharedRendererUtil.hasDrawable(cfg.name) then
+                d8SharedRendererUtil.removeDrawable(cfg.name)
+            end
+        end
+    end
+    for _, a in pairs(D8Madness.compact.effect) do 
+        a.callback(dt, madnessPercent * effectStrenghtModifier, toBeRendered)
+    end
+    prevtoBeRendered = toBeRendered
 end
 
 local lightTimer = 0
@@ -556,17 +565,23 @@ D8Madness.modifierStep = {
             return speciesCfg.default[paramName]
         end
         
-        local obj = world.objectQuery(pos, 30)
+        local obj = world.objectQuery(pos, 30, {
+            order = "nearest"
+        })
         local objModiff = 0
+        --sb.logInfo("D8:Madness Object Modiff | Starting Objects Scan")
         for _, id in pairs(obj) do 
             local _pos = world.entityPosition(id)
-            local _mod = world.getObjectParameter(id, "D8Madness_modiff")
-            local _range = world.getObjectParameter(id, "D8Madness_range") or 4
-            if _mod and (not world.lineTileCollision(pos, _pos, {"Dynamic", "Block", "Slippery"})) and (_range <= world.magnitude(pos, _pos)) then
+            local _mod = world.getObjectParameter(id, "madnessModifier")
+            local _range = world.getObjectParameter(id, "madnessModifierRange") or 4
+            local notObstructed = (not world.lineTileCollision(pos, _pos, {"Dynamic", "Block", "Slippery"}))
+            local inRange = (_range >= world.magnitude(pos, _pos))
+            --sb.logInfo("D8:Madness Object Modiff | modiff %s, range %s, notObstructed %s, inRange %s", _mod, _range, notObstructed, inRange)
+            if _mod and notObstructed and inRange then
                 objModiff = objModiff + _mod
             end
         end
-        --sb.setLogMap("D8:Madness Object Modiff", "%s", objModiff)
+        sb.setLogMap("D8:Madness Object Modiff", "%s", objModiff)
         D8Madness_modiff = D8Madness_modiff + objModiff
     end,
     light = function(dt, speciesCfg, species, pos)
@@ -607,4 +622,21 @@ function D8Madness.modifier(dt)
     for funcName, funcCall in pairs(D8Madness.modifierStep) do 
         funcCall(dt, speciesCfg, species, pos)
     end
+end
+
+
+local _init = init
+function init()
+    if _init then _init() end
+    D8Madness.init()
+end
+local _update = update
+function update(dt)
+    if _update then _update(dt) end
+    D8Madness.update(dt)
+end
+local _uninit = uninit
+function uninit()
+    if _uninit then _uninit() end
+    D8Madness.uninit()
 end

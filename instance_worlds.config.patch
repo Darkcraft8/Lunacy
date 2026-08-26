@@ -123,6 +123,10 @@
     ],
 
     [
+		{
+			"op": "test",
+			"path": "/eldershoggoth"
+		},
         {
 			"op": "add",
 			"path": "/eldershoggoth/D8Madness_modiff",
