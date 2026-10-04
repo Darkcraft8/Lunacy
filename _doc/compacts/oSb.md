@@ -10,7 +10,8 @@
 
 #### Shaders : <a name="shader"></a>
   - Saturation :</br>
-    A shader will be integrated into the mod that will desaturate your world view as you approach the stage of lunacy, it strenght will be configurable or togglable inside of the shader configs.
+    A shader will be integrated into the mod that will desaturate your world view as you approach the stage of lunacy, it strenght will be configurable or togglable inside of the shader configs...</br>
+    `Currently this shader will not be in the mod on release until i learn how to create my own shaders.`
 
 [c1]: #rendering 'click to go there'
 [c2]: #shader 'click to go there'
