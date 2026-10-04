@@ -131,6 +131,11 @@
 			"op": "add",
 			"path": "/eldershoggoth/D8Madness_modiff",
 			"value": 10
+		},
+		{
+			"op": "add",
+			"path": "/outpost/scienceoutpost",
+			"value": -2.5
 		}
     ]
 ]

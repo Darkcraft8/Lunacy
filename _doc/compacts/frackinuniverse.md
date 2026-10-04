@@ -23,6 +23,9 @@
 #### Dungeon : <a name="dungeon"></a>
   - Delta Freya II :</br>
     This mission now has a passive modifier of +10.
+    
+  - Science Outpost :</br>
+    This Instance now has a passive modifier of -2.5</br>(blame Kevin for it to not be -5 like the normal)
 
 #### Specific : <a name="specific"></a>
   - Madness^2 | Maddening boogaloo:</br>
