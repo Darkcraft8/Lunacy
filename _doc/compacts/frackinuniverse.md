@@ -9,12 +9,12 @@
 
 #### Biomes : <a name="biomes"></a>
   - Shadows (Lightless, Midnight ect) :</br>
-    When on one of those planets that induce the impenetrable shadow effect.</br>
-    The mod own testing shadow blur effect overlay will be made actif for the duration of the effect
+    When on one of those planets that induce the impenetrable shadow effect...</br>
+    The mod own testing shadow blur effect overlay will be made actif for the duration of the effect.
 
 #### Liquid : <a name="liquid"></a>
   - Essentia Obscura :</br>
-    Now has a +10 modifier to madness gain
+    Now has a +10 modifier to madness gain.
 
 #### Object : <a name="object"></a>
   - Insta-Freud :</br>
@@ -22,18 +22,18 @@
 
 #### Dungeon : <a name="dungeon"></a>
   - Delta Freya II :</br>
-    This mission now has a passive modifier of +10
+    This mission now has a passive modifier of +10.
 
 #### Specific : <a name="specific"></a>
   - Madness^2 | Maddening boogaloo:</br>
-    Your amount of madness resources get soft-capped by the percentage toward Lunacy you have(up to 1000! by default),</br> as you gain more madness the harder it will be to lower your madness (+100 at the maximum amount of madness resources ;_;)
+    Your amount of madness resources get soft-capped by the percentage toward Lunacy you have(up to 1000! by default),</br> as you gain more madness the harder it will be to lower your madness (+100 at the maximum amount of madness resources ;_;).
 
   - Blurs be gone | Optimization :</br>
-    Frackin universe Shadow blurs and insanity blur are no more as they are superseded by the mod own effect system</br>(primarely to increase fps... why din't they use localAnimator ?)
+    Frackin universe Shadow blurs and insanity blur are no more as they are superseded by the mod own effect system</br>(primarely to increase fps... why didn't they use localAnimator ?).
 
   - Insanity Immunity | clearing the mind:</br>
     Having Insanity Immunity (insanityImmunity stat) will disable the effects of madness for the period where it actif,</br>
-    This does mean that ``Darklight Blossom`` are now a type of sanity food
+    This does mean that ``Darklight Blossom`` are now a type of sanity food.
 
 [c1]: #biomes 'click to go there'
 [c2]: #liquid 'click to go there'
