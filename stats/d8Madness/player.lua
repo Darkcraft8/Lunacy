@@ -67,7 +67,7 @@ local test = {
             {
                 type = "overlay",
                 require = {0.1, 1},
-                zoom = {60, 4},
+                zoom = {120, 4},
                 texture = "/cinematics/story/blackcircle.png?setcolor=000?multiply=fff8",
                 name = "d8Madness_darkenView7",
                 xSine = {
@@ -82,7 +82,7 @@ local test = {
             {
                 type = "overlay",
                 require = {0.1, 0.9},
-                zoom = {60, 6},
+                zoom = {120, 6},
                 texture = "/cinematics/story/blackcircle.png?setcolor=000?multiply=fff8",
                 name = "d8Madness_darkenView6",
                 xSine = {
@@ -97,7 +97,7 @@ local test = {
             {
                 type = "overlay",
                 require = {0.1, 0.8},
-                zoom = {60, 8},
+                zoom = {120, 8},
                 texture = "/cinematics/story/blackcircle.png?setcolor=000?multiply=fff8",
                 name = "d8Madness_darkenView5",
                 xSine = {
@@ -112,7 +112,7 @@ local test = {
             {
                 type = "overlay",
                 require = {0.1, 0.7},
-                zoom = {60, 10},
+                zoom = {120, 10},
                 texture = "/cinematics/story/blackcircle.png?setcolor=000?multiply=fff8",
                 name = "d8Madness_darkenView4",
                 xSine = {
@@ -127,7 +127,7 @@ local test = {
             {
                 type = "overlay",
                 require = {0.1, 0.6},
-                zoom = {60, 12.5},
+                zoom = {120, 12.5},
                 texture = "/cinematics/story/blackcircle.png?setcolor=000?multiply=fff8",
                 name = "d8Madness_darkenView3",
                 xSine = {
@@ -142,7 +142,7 @@ local test = {
             {
                 type = "overlay",
                 require = {0.1, 0.5},
-                zoom = {60, 15},
+                zoom = {120, 15},
                 texture = "/cinematics/story/blackcircle.png?setcolor=000?multiply=fff8",
                 name = "d8Madness_darkenView2",
                 xSine = {
@@ -157,7 +157,7 @@ local test = {
             {
                 type = "overlay",
                 require = {0.1, 0.45},
-                zoom = {60, 18},
+                zoom = {120, 18},
                 texture = "/cinematics/story/blackcircle.png?setcolor=000?multiply=fff8",
                 name = "d8Madness_darkenView1",
                 xSine = {
